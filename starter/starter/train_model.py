@@ -3,26 +3,58 @@
 from sklearn.model_selection import train_test_split
 
 # Add the necessary imports for the starter code.
+#!/usr/bin/env python
+import argparse
+import itertools
+import logging
+import os
 
-# Add code to load in the data.
+import yaml
+import tempfile
+import pandas as pd
+import numpy as np
 
-# Optional enhancement, use K-fold cross validation instead of a train-test split.
-train, test = train_test_split(data, test_size=0.20)
+from .ml.data import process_data
+from .ml.model import train_model
 
-cat_features = [
-    "workclass",
-    "education",
-    "marital-status",
-    "occupation",
-    "relationship",
-    "race",
-    "sex",
-    "native-country",
-]
-X_train, y_train, encoder, lb = process_data(
-    train, categorical_features=cat_features, label="salary", training=True
-)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Train a model",
+        fromfile_prefix_chars="@",
+    )
 
-# Proces the test data with the process_data function.
+    parser.add_argument(
+        "--file_name",
+        type=str,
+        help="Fully-qualified file name location",
+        required=True,
+    )
 
-# Train and save a model.
+
+
+    # Add code to load in the data.
+
+    data = pd.read_csv('../data/census.csv')
+    # Optional enhancement, use K-fold cross validation instead of a train-test split.
+    train, test = train_test_split(data, test_size=0.20)
+
+    cat_features = [
+        "workclass",
+        "education",
+        "marital-status",
+        "occupation",
+        "relationship",
+        "race",
+        "sex",
+        "native-country",
+    ]
+    X_train, y_train, encoder, lb = process_data(
+        train, categorical_features=cat_features, label="salary", training=True
+    )
+
+    # Proces the test data with the process_data function.
+
+    train_model(X_train, y_train)
+    # Train and save a model.
+
+
