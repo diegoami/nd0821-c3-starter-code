@@ -12,6 +12,7 @@ import os
 import yaml
 import tempfile
 import pandas as pd
+import joblib
 import numpy as np
 
 from .ml.data import process_data
@@ -24,17 +25,23 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "--file_name",
+        "--data_file_name",
         type=str,
-        help="Fully-qualified file name location",
+        help="Fully-qualified file name location for data",
+        required=True,
+    )
+
+    parser.add_argument(
+        "--model_file_name",
+        type=str,
+        help="Fully-qualified file name location for model",
         required=True,
     )
 
 
-
     # Add code to load in the data.
-
-    data = pd.read_csv('../data/census.csv')
+    args = parser.parse_args()
+    data = pd.read_csv(args.data_file_name)
     # Optional enhancement, use K-fold cross validation instead of a train-test split.
     train, test = train_test_split(data, test_size=0.20)
 
@@ -54,7 +61,11 @@ if __name__ == "__main__":
 
     # Proces the test data with the process_data function.
 
-    train_model(X_train, y_train)
+    model = train_model(X_train, y_train)
+    filename = args.model_file_name
+    joblib.dump(model, filename)
+
     # Train and save a model.
+
 
 
