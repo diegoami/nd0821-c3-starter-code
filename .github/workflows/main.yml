@@ -18,7 +18,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Show Secrets
-    - run: |
+      run: |
         - echo ${{ secrets.AWS_ACCESS_KEY_ID }}
         - echo ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     - name: Configure AWS Credentials
