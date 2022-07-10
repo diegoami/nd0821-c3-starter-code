@@ -32,7 +32,8 @@ jobs:
       uses: iterative/setup-dvc@v1
     - name: Pull DVC
       run: |
-        - dvc pull
+        cd starter/data
+        dvc pull
     - name: Set up Python 3.8
       uses: actions/setup-python@v2
       with:
