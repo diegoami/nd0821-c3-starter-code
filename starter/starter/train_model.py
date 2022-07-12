@@ -15,8 +15,8 @@ import pandas as pd
 import joblib
 import numpy as np
 
-from .ml.data import process_data
-from .ml.model import train_model
+from ml.data import process_data
+from ml.model import train_model
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
