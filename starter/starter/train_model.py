@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split
 import argparse
 import pandas as pd
 import joblib
+import os
 
 
 from ml.data import process_data
@@ -26,9 +27,9 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "--model_file_name",
+        "--model_dir_name",
         type=str,
-        help="Fully-qualified file name location for model",
+        help="Fully-qualified dir name location for model",
         required=True,
     )
 
@@ -59,9 +60,13 @@ if __name__ == "__main__":
     )
 
     model = train_model(X_train, y_train)
-    filename = args.model_file_name
+    dirname = args.model_dir_name
+    os.makedirs(dirname, exist_ok=True)
+    joblib.dump(model, os.path.join(dirname, 'model'))
+    joblib.dump(encoder, os.path.join(dirname, 'encoder'))
+    joblib.dump(lb, os.path.join(dirname, 'lb'))
+    joblib.dump(cat_features, os.path.join(dirname, 'cat_features'))
 
-    joblib.dump(model, filename)
     preds = inference(model, X_test)
     precision, recall, fbeta = compute_model_metrics(y_test, preds)
     # Train and save a model.
