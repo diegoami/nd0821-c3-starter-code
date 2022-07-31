@@ -69,6 +69,9 @@ if __name__ == "__main__":
     print()
     print()
 
+    for slice_feature in cat_features:
+        list_unique = data[slice_feature].unique()
+        print(f"{slice_feature} : {list_unique}")
 
     for slice_feature in cat_features:
         print(f"==== SLICE FORF FEATURE : {slice_feature}")
