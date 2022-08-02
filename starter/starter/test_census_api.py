@@ -26,9 +26,11 @@ dummy_census_entry = {
 
 def test_print_out():
     r = client.post("/print_out", json=dummy_census_entry)
-    print(r.json())
+    result_call = r.json()
+    assert (result_call == dummy_census_entry)
 
 
 def test_predict():
     r = client.post("/predict", json=dummy_census_entry)
-    print(r.json())
+    result_call = r.json()
+    assert result_call["result"].lower() in ["<=50k", ">50k"]
